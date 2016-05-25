@@ -15,7 +15,7 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) throws IOException {
 
-        HashMap readMap = ReadJson();
+        HashMap readMap = ReadJson("album.json");
         if (readMap == null) {
             askQuestion();
         }
@@ -30,11 +30,10 @@ public class Main {
                 System.out.println("Thank you for playing.");
             }
         }
-
     }
 
-    public static HashMap ReadJson() throws FileNotFoundException {
-        File file = new File("album.json");
+    public static HashMap ReadJson(String filename) throws FileNotFoundException {
+        File file = new File(filename);
         Scanner scanner = new Scanner(file);
         scanner.useDelimiter("\\Z");
         String contents = scanner.next();
@@ -48,11 +47,10 @@ public class Main {
         }
 
         return null;
-
     }
 
-    public static void WriteJson(HashMap album) throws IOException {
-        File file = new File("album.json");
+    public static void WriteJson(HashMap album, String filename) throws IOException {
+        File file = new File(filename);
         JsonSerializer serializer = new JsonSerializer();
         String json = serializer.serialize(album);
         FileWriter fw = new FileWriter(file);
@@ -60,7 +58,6 @@ public class Main {
         fw.close();
         System.out.println(json);
     }
-
 
     public static void askQuestion() {
 
@@ -83,13 +80,10 @@ public class Main {
         map.put("year", year);
 
         try {
-            WriteJson(map);
+            WriteJson(map, "album.json");
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-
 }
