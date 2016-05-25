@@ -39,8 +39,16 @@ public class Main {
         scanner.useDelimiter("\\Z");
         String contents = scanner.next();
         JsonParser parser = new JsonParser();
-        HashMap albumParse = parser.parse(contents);
-        return albumParse;
+        try {
+            HashMap albumParse = parser.parse(contents);
+            return albumParse;
+        }
+        catch (Exception e) {
+            System.out.println("Invalid Json");
+        }
+
+        return null;
+
     }
 
     public static void WriteJson(HashMap album) throws IOException {
@@ -55,19 +63,8 @@ public class Main {
 
 
     public static void askQuestion() {
-        HashMap map = null;
-        try {
-            map = ReadJson();
-        }
-        catch (FileNotFoundException e) {
 
-        }
-        if (map == null) {
-            map = new HashMap();
-        }
-        else {
-            System.out.println(map.toString());
-        }
+        HashMap map = new HashMap();
 
         System.out.println("Enter an album of your choice");
         String album = scanner.nextLine();
@@ -93,4 +90,6 @@ public class Main {
         }
 
     }
+
+
 }
